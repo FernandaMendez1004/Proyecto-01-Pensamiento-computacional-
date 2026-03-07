@@ -35,13 +35,21 @@ do
 
     case 2:
         Console.WriteLine("Mostrar reglas del contenido");
-            Console.WriteLine("a) Validación técnica ");
-            Console.WriteLine("Reglas de clasificación y horario\r\n Todo público: cualquier hora \r\n +13: entre 6 y 22 horas \r\n +18: entre 22 y 5 horas ");
-            Console.WriteLine("Reglas de duración por tipo \r\n Película: 60–180 minutos \r\n Serie: 20–90 minutos \r\n Documental: 30–120 minutos \r\n Evento en vivo: 30–240 minutos ");
-            Console.WriteLine("Reglas de producción \r\n Producción baja solo válida para Todo público o +13 \r\n Producción media o alta válida para cualquier clasificación ");
-            Console.WriteLine("b) Clasificación de impacto ");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("a) Validación técnica");
+            Console.ResetColor();
+            Console.WriteLine(" - Reglas de clasificación y horario\r\n    Todo público: cualquier hora \r\n    +13: entre 6 y 22 horas \r\n    +18: entre 22 y 5 horas ");
+            Console.WriteLine(" - Reglas de duración por tipo \r\n    Película: 60–180 minutos \r\n    Serie: 20–90 minutos \r\n    Documental: 30–120 minutos \r\n    Evento en vivo: 30–240 minutos ");
+            Console.WriteLine(" - Reglas de producción \r\n    Producción baja solo válida para Todo público o +13 \r\n   Producción media o alta válida para cualquier clasificación ");
+            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("b) Clasificación de impacto");
+            Console.ResetColor();
             Console.WriteLine(" Impacto Alto: producción alta, o duración mayor a 120 minutos, o programado entre 20 y 23 horas. \r\n Impacto Medio: producción media o duración entre 60 y 120 minutos. \r\n Impacto Bajo: producción baja y duración menor a 60 minutos.");
-            Console.WriteLine("c) Decisión final ");
+            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("c) Decisión final");
+            Console.ResetColor();
             Console.WriteLine(" Publicar: cumple todas las reglas técnicas y su impacto es Bajo o Medio. \r\n Publicar con ajustes: cumple reglas técnicas, pero requiere modificación menor (ejemplo: ajustar horario permitido o duración dentro del rango). \r\n Enviar a revisión: cumple reglas técnicas, pero tiene impacto Alto. \r\n Rechazar: incumple alguna regla obligatoria. ");
 
 
