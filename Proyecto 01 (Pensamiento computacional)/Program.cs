@@ -1,5 +1,11 @@
 ﻿Console.WriteLine("Proyecto 01 Plataforma de Streaming");
 int opcion_menu = 0;
+string tipo_contenido = "";
+int duracion = 0;
+string clasificacion = "";
+int hora_programada = 0;
+string nivel_produccion = "";
+
 do
 {
     Console.WriteLine("1. Evaluar nuevo contenido");
@@ -15,6 +21,16 @@ do
     {
         case 1:
         Console.WriteLine("Evaluar nuevo contenido");
+            Console.WriteLine("Ingrese el tipo de contenido (película, serie, documental, evento en vivo) ");
+            tipo_contenido = Console.ReadLine();
+            Console.WriteLine("Ingrese la duración en minutos");
+            duracion = int.Parse(Console.ReadLine());
+            Console.WriteLine("Ingrese la clasificación (todo público, +13, +18) ");
+            clasificacion = Console.ReadLine();
+            Console.WriteLine("Ingrese la hora programada");
+            hora_programada = int.Parse(Console.ReadLine());
+            Console.WriteLine("Ingrese el nivel de producción (bajo, medio, alto) ");
+            nivel_produccion = Console.ReadLine();
         break;
 
     case 2:
