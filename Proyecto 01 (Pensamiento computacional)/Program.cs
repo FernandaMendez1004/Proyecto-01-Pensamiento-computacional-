@@ -120,8 +120,13 @@ do
             break;
 
     case 3:
-
-               break;
+            Console.WriteLine("Mostrar estadísticas de la sesión ");
+            Console.WriteLine($"El tipo de contenido fue {tipo_contenido}");
+            Console.WriteLine($"La duracion del contenido fue {duracion}");
+            Console.WriteLine($"La clasificación del contenido fue {clasificacion}");
+            Console.WriteLine($"La hora programada del contenido fue {hora_programada}");
+            Console.WriteLine($"El nivel de producción del contenido fue {nivel_produccion}");
+            break;
 
     case 4:
         Console.WriteLine("Reiniciar estadísticas ");
