@@ -20,18 +20,50 @@ do
     switch (opcion_menu)
     {
         case 1:
-        Console.WriteLine("Evaluar nuevo contenido");
-            Console.WriteLine("Ingrese el tipo de contenido (película, serie, documental, evento en vivo) ");
+            Console.WriteLine("Evaluar nuevo contenido");
+            Console.WriteLine("Ingrese el tipo de contenido (pelicula, serie, documental, evento en vivo)");
             tipo_contenido = Console.ReadLine();
             Console.WriteLine("Ingrese la duración en minutos");
             duracion = int.Parse(Console.ReadLine());
-            Console.WriteLine("Ingrese la clasificación (todo público, +13, +18) ");
+
+            if (tipo_contenido == "pelicula")
+            {
+                if (duracion < 60 || duracion > 180)
+                { Console.WriteLine("Contenido rechezado"); }
+                else
+                { Console.WriteLine("Duración válida para película"); }
+            }
+            else if (tipo_contenido == "serie")
+            {
+                if (duracion < 20 || duracion > 90)
+                { Console.WriteLine("Contenido rechezado"); }
+                else
+                { Console.WriteLine("Duración válida para serie"); }
+            }
+            else if (tipo_contenido == "documental")
+            {
+                if (duracion < 30 || duracion > 120)
+                { Console.WriteLine("Contenido rechezado"); }
+                else
+                { Console.WriteLine("Duración válida para documental"); }
+            }
+            else if (tipo_contenido == "evento en vivo")
+            {
+                if (duracion < 30 || duracion > 240)
+                { Console.WriteLine("Contenido rechezado"); }
+                else
+                { Console.WriteLine("Duración válida para evento en vivo"); }
+            }
+            else
+            { Console.WriteLine("Tipo de contenido no válido"); }
+
+            Console.WriteLine("Ingrese la clasificación (todo publico, +13, +18)");
             clasificacion = Console.ReadLine();
-            Console.WriteLine("Ingrese la hora programada");
+            Console.WriteLine("Ingrese la hora programada (0-23)");
             hora_programada = int.Parse(Console.ReadLine());
-            Console.WriteLine("Ingrese el nivel de producción (bajo, medio, alto) ");
+            Console.WriteLine("Ingrese el nivel de producción (bajo, medio, alto)");
             nivel_produccion = Console.ReadLine();
-        break;
+            break;
 
     case 2:
         Console.WriteLine("Mostrar reglas del contenido");
@@ -51,9 +83,6 @@ do
             Console.WriteLine("c) Decisión final");
             Console.ResetColor();
             Console.WriteLine(" Publicar: cumple todas las reglas técnicas y su impacto es Bajo o Medio. \r\n Publicar con ajustes: cumple reglas técnicas, pero requiere modificación menor (ejemplo: ajustar horario permitido o duración dentro del rango). \r\n Enviar a revisión: cumple reglas técnicas, pero tiene impacto Alto. \r\n Rechazar: incumple alguna regla obligatoria. ");
-
-
-
             break;
 
     case 3:
