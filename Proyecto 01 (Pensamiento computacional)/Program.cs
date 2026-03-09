@@ -21,10 +21,11 @@ do
     {
         case 1:
             Console.WriteLine("Evaluar nuevo contenido");
+
             Console.WriteLine("Ingrese el tipo de contenido (pelicula, serie, documental, evento en vivo)");
             tipo_contenido = Console.ReadLine();
             Console.WriteLine("Ingrese la duración en minutos");
-            duracion = int.Parse(Console.ReadLine());
+            duracion = int.Parse(Console.ReadLine()); // Validar duración según tipo de contenido 1 if
 
             if (tipo_contenido == "pelicula")
             {
@@ -58,7 +59,27 @@ do
             { Console.WriteLine("Tipo de contenido no válido"); }
 
             Console.WriteLine("Ingrese la clasificación (todo publico, +13, +18)");
-            clasificacion = Console.ReadLine();
+            clasificacion = Console.ReadLine(); // Validar clasificación y horario 2 if
+
+            if (clasificacion == "todo publico")
+            { Console.WriteLine("Clasificación válida para cualquier horario"); }
+            else if (clasificacion == "+13")
+            {
+                if (hora_programada >= 6 && hora_programada <= 22)
+                { Console.WriteLine("Horario válido para clasificación +13"); }
+                else
+                {Console.WriteLine("Rechazar: +13 solo se permite entre 6 y 22 horas"); }
+            }
+            else if (clasificacion == "+18")
+            {
+                if (hora_programada >= 22 || hora_programada <= 5)
+                { Console.WriteLine("Horario válido para clasificación +18"); }
+                else
+                { Console.WriteLine("Rechazar: +18 solo se permite entre 22 y 5 horas");}
+            }
+            else
+            { Console.WriteLine("Clasificación no válida"); }
+
             Console.WriteLine("Ingrese la hora programada (0-23)");
             hora_programada = int.Parse(Console.ReadLine());
             Console.WriteLine("Ingrese el nivel de producción (bajo, medio, alto)");
