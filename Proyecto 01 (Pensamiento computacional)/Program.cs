@@ -120,11 +120,18 @@ do
             break;
 
     case 3:
+
                break;
 
     case 4:
         Console.WriteLine("Reiniciar estadísticas ");
-                        break;
+            opcion_menu = 0;
+            tipo_contenido = "";
+            duracion = 0;
+            clasificacion = "";
+            hora_programada = 0;
+            nivel_produccion = "";
+            break;
 
     case 5:
         Console.WriteLine("Salir");
