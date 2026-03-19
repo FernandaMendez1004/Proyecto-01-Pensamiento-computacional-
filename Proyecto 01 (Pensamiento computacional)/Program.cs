@@ -1,16 +1,17 @@
 ﻿Console.ForegroundColor = ConsoleColor.Cyan;
-Console.WriteLine("==============================================");
-Console.WriteLine("     PROYECTO 01 - PLATAFORMA STREAMING");
-Console.WriteLine("==============================================");
+Console.WriteLine("======================================================");
+Console.WriteLine("        PROYECTO 01 - PLATAFORMA STREAMING");
+Console.WriteLine("======================================================");
 Console.WriteLine();
 Console.ResetColor();
-int opcion_menu = 0;
+
 string tipo_contenido = "";
 int duracion = 0;
 string clasificacion = "";
 int hora_programada = 0;
 string nivel_produccion = "";
 bool correcto;
+int opcion_menu = 0;
 
 string PedirTipoContenido()
 {
@@ -55,8 +56,9 @@ string PedirClasificacion()
     return tipo;
 }
 
-do
+int MenuInicio ()
 {
+    do { 
     Console.ForegroundColor = ConsoleColor.Red;
     Console.WriteLine(" 1. Evaluar nuevo contenido");
     Console.ResetColor();
@@ -84,16 +86,26 @@ do
     Console.WriteLine();
     Console.ResetColor();
 
-        if (correcto)
+    if (correcto)
+    {
+        if (opcion_menu < 1 || opcion_menu > 5)
         {
-            if (opcion_menu < 1 || opcion_menu > 5)
-            {
-                correcto = false;
-                Console.WriteLine("Opción inválida");
-            }
+            Console.ForegroundColor = ConsoleColor.Red;
+            correcto = false;
+            Console.WriteLine("Opción inválida");
+                Console.WriteLine();
+            Console.ResetColor();
         }
-     
-        switch (opcion_menu)
+    }
+} while (!correcto || opcion_menu <1 || opcion_menu >5);
+    return opcion_menu;
+}
+
+do
+{
+    opcion_menu = MenuInicio();
+
+    switch (opcion_menu)
         {
             case 1:
                 Console.WriteLine("Evaluar nuevo contenido");
