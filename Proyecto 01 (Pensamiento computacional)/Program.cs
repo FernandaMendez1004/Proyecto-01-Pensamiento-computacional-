@@ -5,6 +5,7 @@ int duracion = 0;
 string clasificacion = "";
 int hora_programada = 0;
 string nivel_produccion = "";
+bool correcto;
 
 do
 {
@@ -13,10 +14,17 @@ do
     Console.WriteLine("3. Mostrar estadísticas de la sesión");
     Console.WriteLine("4. Reiniciar estadísticas");
     Console.WriteLine("5. Salir");
-    Console.WriteLine("Elija una opción:");
-    opcion_menu = int.Parse(Console.ReadLine());
-
-
+    Console.WriteLine("Elija una opcion ");
+    correcto = int.TryParse(Console.ReadLine(), out opcion_menu);
+    if (correcto)
+    {
+        if (opcion_menu < 1 || opcion_menu > 5)
+        {
+            correcto = false;
+            Console.WriteLine("Opción inválida");
+        }
+    }
+     
     switch (opcion_menu)
     {
         case 1:
