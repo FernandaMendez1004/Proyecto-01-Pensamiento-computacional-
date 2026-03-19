@@ -33,6 +33,27 @@ string PedirTipoContenido()
 
     return tipo;
 }
+string PedirClasificacion()
+{
+    string tipo;
+
+    do
+    {
+        Console.WriteLine("Ingrese la clasificación (todo publico, +13, +18): ");
+        tipo = Console.ReadLine().ToLower();
+
+        if (tipo != "todo publico" && tipo != "+13" && tipo != "+18")
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("Error: clasificación no válida");
+            Console.WriteLine("Intente de nuevo.........");
+            Console.ResetColor();
+        }
+
+    } while (tipo != "todo publico" && tipo != "+13" && tipo != "+18");
+
+    return tipo;
+}
 
 do
 {
@@ -113,8 +134,8 @@ do
                 { Console.WriteLine("Tipo de contenido no válido"); }
 
                 Console.WriteLine();
-                Console.WriteLine("Ingrese la clasificación (todo publico, +13, +18)");
-                clasificacion = Console.ReadLine(); // Validar clasificación y horario 2 if               
+                Console.WriteLine("Evaluar clasificacion");
+                clasificacion = PedirClasificacion(); // Validar clasificación y horario 2 if               
                 Console.WriteLine("Ingrese la hora programada (0-23)");
                 hora_programada = int.Parse(Console.ReadLine());
 
