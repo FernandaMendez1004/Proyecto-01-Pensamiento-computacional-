@@ -13,7 +13,7 @@ string nivel_produccion = "";
 bool correcto;
 int opcion_menu = 0;
 bool duracionValida = false;
-
+bool horarioValido = false;
 string PedirTipoContenido()
 {
     string tipo;
@@ -156,7 +156,9 @@ do
                     if (duracion < 20 || duracion > 90)
                     { Console.WriteLine("Contenido rechazado"); }
                     else
-                    { Console.WriteLine("Duración válida para serie"); }
+                    { Console.WriteLine("Duración válida para serie");
+                    duracionValida = (duracion >= 30 && duracion <= 120);
+                }
                 }
                 else if (tipo_contenido == "documental")
                 {
