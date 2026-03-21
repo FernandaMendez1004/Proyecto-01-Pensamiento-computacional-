@@ -1,7 +1,7 @@
 ﻿Console.ForegroundColor = ConsoleColor.Cyan;
-Console.WriteLine("======================================================");
-Console.WriteLine("        PROYECTO 01 - PLATAFORMA STREAMING");
-Console.WriteLine("======================================================");
+Console.WriteLine("= = = = = = = = = = = = = = = = = = = = = = = = = = = = = =");
+Console.WriteLine("            PROYECTO 01 - PLATAFORMA STREAMING");
+Console.WriteLine("= = = = = = = = = = = = = = = = = = = = = = = = = = = = = =");
 Console.WriteLine();
 Console.ResetColor();
 
@@ -34,6 +34,7 @@ string PedirTipoContenido()
 
     return tipo;
 }
+
 string PedirClasificacion()
 {
     string tipo;
@@ -101,6 +102,8 @@ int MenuInicio ()
     return opcion_menu;
 }
 
+
+
 do
 {
     opcion_menu = MenuInicio();
@@ -111,8 +114,25 @@ do
                 Console.WriteLine("Evaluar nuevo contenido");
                 tipo_contenido = PedirTipoContenido(); // Validar tipo de contenido
                 Console.WriteLine("Ingrese la duración en minutos");
-                duracion = int.Parse(Console.ReadLine()); // Validar duración según tipo de contenido 1 if
+                correcto = int.TryParse(Console.ReadLine(), out duracion); // Validar duración según tipo de contenido 1 if
+                Console.WriteLine();
+                Console.ResetColor();
 
+            do
+            {
+                if (correcto)
+                {
+                    if (duracion < 0 || duracion > 240)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        correcto = false;
+                        Console.WriteLine("Opción inválida");
+                        Console.WriteLine();
+                        Console.ResetColor();
+                    }
+                }
+            }
+            while (!correcto || duracion < 0 || duracion > 240);
 
                 if (tipo_contenido == "pelicula")
                 {
@@ -143,15 +163,29 @@ do
                     { Console.WriteLine("Duración válida para evento en vivo"); }
                 }
                 else
-                { Console.WriteLine("Tipo de contenido no válido"); }
+                { Console.WriteLine("Tipo de contenido no válido"); 
+                }
 
                 Console.WriteLine();
                 Console.WriteLine("Evaluar clasificacion");
                 clasificacion = PedirClasificacion(); // Validar clasificación y horario 2 if               
                 Console.WriteLine("Ingrese la hora programada (0-23)");
-                hora_programada = int.Parse(Console.ReadLine());
+                correcto = int.TryParse(Console.ReadLine(), out hora_programada); // Validar duración según tipo de contenido 1 if
+                Console.WriteLine();
+                if (correcto)
+                {
+                    if (hora_programada < 0 || hora_programada > 23)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        correcto = false;
+                        Console.WriteLine("Opción inválida");
+                        Console.WriteLine();
+                        Console.ResetColor();
+                    }
+                }
 
-                if (clasificacion == "todo publico")
+
+            if (clasificacion == "todo publico")
                 { Console.WriteLine("Clasificación válida para cualquier horario"); }
                 else if (clasificacion == "+13")
                 {
@@ -169,6 +203,7 @@ do
                 }
                 else
                 { Console.WriteLine("Clasificación no válida"); }
+
 
                 Console.WriteLine();
                 Console.WriteLine("Ingrese el nivel de producción (bajo, medio, alto)");
