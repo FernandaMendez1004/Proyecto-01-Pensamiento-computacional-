@@ -174,24 +174,34 @@ do
 
                 Console.WriteLine();
                 Console.WriteLine("Evaluar clasificacion");
-                clasificacion = PedirClasificacion(); // Validar clasificación y horario 2 if               
+                clasificacion = PedirClasificacion(); // Validar clasificación y horario 2 if
+
+            do
+            {
                 Console.WriteLine("Ingrese la hora programada (0-23)");
                 correcto = int.TryParse(Console.ReadLine(), out hora_programada); // Validar duración según tipo de contenido 1 if
                 Console.WriteLine();
-                if (correcto)
+                if (!correcto)
                 {
-                    if (hora_programada < 0 || hora_programada > 23)
-                    {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        correcto = false;
-                        Console.WriteLine("Opción inválida");
-                        Console.WriteLine();
-                        Console.ResetColor();
-                    }
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    correcto = false;
+                    Console.WriteLine("Ingrese un valor numerico");
+                    Console.WriteLine();
+                    Console.ResetColor();
                 }
 
+                if (hora_programada < 0 || hora_programada > 23)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    correcto = false;
+                    Console.WriteLine("Opción inválida");
+                    Console.WriteLine();
+                    Console.ResetColor();
+                }
+            }
+            while (!correcto || hora_programada < 0 || hora_programada > 23);
 
-            if (clasificacion == "todo publico")
+                if (clasificacion == "todo publico")
                 { Console.WriteLine("Clasificación válida para cualquier horario"); }
                 else if (clasificacion == "+13")
                 {
