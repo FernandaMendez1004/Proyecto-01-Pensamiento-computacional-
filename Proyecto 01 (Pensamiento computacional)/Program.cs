@@ -12,6 +12,7 @@ int hora_programada = 0;
 string nivel_produccion = "";
 bool correcto;
 int opcion_menu = 0;
+bool duracionValida = false;
 
 string PedirTipoContenido()
 {
@@ -145,7 +146,10 @@ do
                     if (duracion < 60 || duracion > 180)
                     { Console.WriteLine("Contenido rechazado"); }
                     else
-                    { Console.WriteLine("Duración válida para película"); }
+                    { 
+                    Console.WriteLine("Duración válida para película");
+                    duracionValida = (duracion >= 60 && duracion <= 180);
+                    }
                 }
                 else if (tipo_contenido == "serie")
                 {
