@@ -113,26 +113,32 @@ do
             case 1:
                 Console.WriteLine("Evaluar nuevo contenido");
                 tipo_contenido = PedirTipoContenido(); // Validar tipo de contenido
+                
+            do
+            {
                 Console.WriteLine("Ingrese la duración en minutos");
                 correcto = int.TryParse(Console.ReadLine(), out duracion); // Validar duración según tipo de contenido 1 if
                 Console.WriteLine();
                 Console.ResetColor();
 
-            do
-            {
-                if (correcto)
+                if (!correcto)
                 {
-                    if (duracion < 0 || duracion > 240)
-                    {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        correcto = false;
-                        Console.WriteLine("Opción inválida");
-                        Console.WriteLine();
-                        Console.ResetColor();
-                    }
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Error: debe ingresar un número");
+                    Console.ResetColor();
                 }
+
+                if ( duracion < 0 || duracion > 240)
+                {
+                      Console.ForegroundColor = ConsoleColor.Red;
+                      correcto = false;
+                      Console.WriteLine("Opción inválida");
+                      Console.WriteLine();
+                      Console.ResetColor();
+                }
+              
             }
-            while (!correcto || duracion < 0 || duracion > 240);
+            while (!correcto || duracion < 0 || duracion > 240  || (tipo_contenido == "pelicula" && (duracion < 60 || duracion > 180)) || (tipo_contenido == "serie" && (duracion < 20 || duracion > 90)) || (tipo_contenido == "documental" && (duracion < 30 || duracion > 120)) || (tipo_contenido == "evento en vivo" && (duracion < 30 || duracion > 240)));
 
                 if (tipo_contenido == "pelicula")
                 {
