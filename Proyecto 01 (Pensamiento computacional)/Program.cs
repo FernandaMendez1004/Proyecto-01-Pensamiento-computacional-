@@ -12,6 +12,8 @@ int hora_programada = 0;
 string nivel_produccion = "";
 bool correcto;
 int opcion_menu = 0;
+
+string razon = "";
 bool duracionValida = false;
 bool horarioValido = false;
 string PedirTipoContenido()
@@ -143,40 +145,57 @@ do
 
                 if (tipo_contenido == "pelicula")
                 {
-                    if (duracion < 60 || duracion > 180)
-                    { Console.WriteLine("Contenido rechazado"); }
-                    else
-                    { 
+                if (duracion < 60 || duracion > 180)
+                {
+                    Console.WriteLine("Contenido rechazado");
+                    duracionValida = false;
+                }
+                else
+                {
                     Console.WriteLine("Duración válida para película");
-                    duracionValida = (duracion >= 60 && duracion <= 180);
-                    }
+                    duracionValida = true;
+                }
                 }
                 else if (tipo_contenido == "serie")
                 {
-                    if (duracion < 20 || duracion > 90)
-                    { Console.WriteLine("Contenido rechazado"); }
-                    else
-                    { Console.WriteLine("Duración válida para serie");
-                    duracionValida = (duracion >= 30 && duracion <= 120);
+                if (duracion < 20 || duracion > 90)
+                {
+                    Console.WriteLine("Contenido rechazado");
+                    duracionValida = false;
+                }
+                else
+                {
+                    Console.WriteLine("Duración válida para serie");
+                    duracionValida = true;
                 }
                 }
                 else if (tipo_contenido == "documental")
                 {
                     if (duracion < 30 || duracion > 120)
-                    { Console.WriteLine("Contenido rechazado"); }
+                { Console.WriteLine("Contenido rechazado");
+                    duracionValida = false;
+                }
                     else
-                    { Console.WriteLine("Duración válida para documental"); }
+                    { Console.WriteLine("Duración válida para documental");
+                    duracionValida = true;
+                    }
                 }
                 else if (tipo_contenido == "evento en vivo")
                 {
                     if (duracion < 30 || duracion > 240)
-                    { Console.WriteLine("Contenido rechazado"); }
+                    { Console.WriteLine("Contenido rechazado");
+                    duracionValida = false;
+                }
                     else
-                    { Console.WriteLine("Duración válida para evento en vivo"); }
+                { 
+                    Console.WriteLine("Duración válida para evento en vivo");
+                    duracionValida = true;
+                }
                 }
                 else
                 { Console.WriteLine("Tipo de contenido no válido"); 
-                }
+                razon = razon + "Tipo de contenido no válido";
+            }
 
                 Console.WriteLine();
                 Console.WriteLine("Evaluar clasificacion");
