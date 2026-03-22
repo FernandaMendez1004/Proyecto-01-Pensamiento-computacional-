@@ -227,24 +227,33 @@ do
             while (!correcto || hora_programada < 0 || hora_programada > 23);
 
                 if (clasificacion == "todo publico")
-                { Console.WriteLine("Clasificación válida para cualquier horario"); }
+                { Console.WriteLine("Clasificación válida para cualquier horario");
+                  horarioValido = true;
+                }
                 else if (clasificacion == "+13")
                 {
                     if (hora_programada >= 6 && hora_programada <= 22)
-                    { Console.WriteLine("Horario válido para clasificación +13"); }
+                    { Console.WriteLine("Horario válido para clasificación +13");
+                     horarioValido = true;
+                    }
                     else
-                    { Console.WriteLine("Rechazar: +13 solo se permite entre 6 y 22 horas"); }
+                    { Console.WriteLine("Rechazar: +13 solo se permite entre 6 y 22 horas"); 
+                horarioValido = false;
                 }
-                else if (clasificacion == "+18")
+            }
+            else if (clasificacion == "+18")
                 {
                     if (hora_programada >= 22 || hora_programada <= 5)
-                    { Console.WriteLine("Horario válido para clasificación +18"); }
+                    { Console.WriteLine("Horario válido para clasificación +18"); 
+                      horarioValido = true;
+                    }
                     else
-                    { Console.WriteLine("Rechazar: +18 solo se permite entre 22 y 5 horas"); }
+                    { Console.WriteLine("Rechazar: +18 solo se permite entre 22 y 5 horas"); 
+                    horarioValido = false;
                 }
-                else
-                { Console.WriteLine("Clasificación no válida"); }
-
+            }
+            else
+            { Console.WriteLine("Clasificación no válida"); }
 
                 Console.WriteLine();
                 Console.WriteLine("Ingrese el nivel de producción (bajo, medio, alto)");
