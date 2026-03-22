@@ -16,6 +16,7 @@ int opcion_menu = 0;
 string razon = "";
 bool duracionValida = false;
 bool horarioValido = false;
+bool produccionValida = false;
 string PedirTipoContenido()
 {
     string tipo;
@@ -193,7 +194,8 @@ do
                 }
                 }
                 else
-                { Console.WriteLine("Tipo de contenido no válido"); 
+            { 
+                Console.WriteLine("Tipo de contenido no válido"); 
                 razon = razon + "Tipo de contenido no válido";
             }
 
@@ -226,34 +228,42 @@ do
             }
             while (!correcto || hora_programada < 0 || hora_programada > 23);
 
-                if (clasificacion == "todo publico")
-                { Console.WriteLine("Clasificación válida para cualquier horario");
-                  horarioValido = true;
-                }
-                else if (clasificacion == "+13")
+            if (clasificacion == "todo publico")
+            {
+                Console.WriteLine("Clasificación válida para cualquier horario");
+                horarioValido = true;
+            }
+            else if (clasificacion == "+13")
+            {
+                if (hora_programada >= 6 && hora_programada <= 22)
                 {
-                    if (hora_programada >= 6 && hora_programada <= 22)
-                    { Console.WriteLine("Horario válido para clasificación +13");
-                     horarioValido = true;
-                    }
-                    else
-                    { Console.WriteLine("Rechazar: +13 solo se permite entre 6 y 22 horas"); 
-                horarioValido = false;
+                    Console.WriteLine("Horario válido para clasificación +13");
+                    horarioValido = true;
+                }
+                else
+                {
+                    Console.WriteLine("Rechazar: +13 solo se permite entre 6 y 22 horas");
+                    horarioValido = false;
                 }
             }
             else if (clasificacion == "+18")
+            {
+                if (hora_programada >= 22 || hora_programada <= 5)
                 {
-                    if (hora_programada >= 22 || hora_programada <= 5)
-                    { Console.WriteLine("Horario válido para clasificación +18"); 
-                      horarioValido = true;
-                    }
-                    else
-                    { Console.WriteLine("Rechazar: +18 solo se permite entre 22 y 5 horas"); 
+                    Console.WriteLine("Horario válido para clasificación +18");
+                    horarioValido = true;
+                }
+                else
+                {
+                    Console.WriteLine("Rechazar: +18 solo se permite entre 22 y 5 horas");
                     horarioValido = false;
                 }
             }
             else
-            { Console.WriteLine("Clasificación no válida"); }
+            {
+                Console.WriteLine("Horario no válido");
+                razon = razon + "Horario no válido";
+            }
 
                 Console.WriteLine();
                 Console.WriteLine("Ingrese el nivel de producción (bajo, medio, alto)");
@@ -261,15 +271,26 @@ do
 
                 if (nivel_produccion == "bajo")
                 {
-                    if (clasificacion == "todo publico" || clasificacion == "+13")
-                    { Console.WriteLine("Producción baja válida para clasificación"); }
-                    else
-                    { Console.WriteLine("Rechazar: producción baja solo válida para todo público o +13"); }
+                if (clasificacion == "todo publico" || clasificacion == "+13")
+                {
+                    Console.WriteLine("Producción baja válida para clasificación");
+                    produccionValida = true;
+                }
+                else
+                {
+                    Console.WriteLine("Rechazar: producción baja solo válida para todo público o +13");
+                    produccionValida = false;
+                }
                 }
                 else if (nivel_produccion == "medio" || nivel_produccion == "alto")
-                { Console.WriteLine("Producción media o alta válida para cualquier clasificación"); }
+                { Console.WriteLine("Producción media o alta válida para cualquier clasificación");
+            produccionValida = true;
+                }
                 else
-                { Console.WriteLine("Nivel de producción no válido"); }
+                { Console.WriteLine("Nivel de producción no válido"); 
+            produccionValida=false;
+            razon = razon + "Nivel de producción no válido";
+            }
             
                 break;
 
