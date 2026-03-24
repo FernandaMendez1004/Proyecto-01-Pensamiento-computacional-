@@ -17,20 +17,30 @@ string razon = "";
 bool duracionValida = false;
 bool horarioValido = false;
 bool produccionValida = false;
+bool requiereAjuste = false;
 string PedirTipoContenido()
 {
     string tipo;
 
     do
     {
-        Console.WriteLine("Ingrese tipo de contenido (pelicula, serie, documental, evento en vivo):");
-        tipo = Console.ReadLine().ToLower();
+        Console.WriteLine(@"Ingrese tipo de contenido 
+Estas son las distintas opciones 
+- Película
+- Serie
+- Documental
+- Evento en vivo
+");
+        tipo = Console.ReadLine().ToLower()
+       .Replace("í", "i")
+       .Trim(); 
 
-        if (tipo != "pelicula" && tipo != "serie" && tipo != "documental" && tipo != "evento en vivo")
+        if (tipo != "pelicula" && tipo != "serie" && tipo != "documental" && tipo != "evento en vivo ")
         {
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("Error: tipo de contenido no válido");
+            Console.WriteLine("Tipo de contenido no válido");
             Console.WriteLine("Intente de nuevo.........");
+            Console.WriteLine();
             Console.ResetColor();
         }
 
@@ -39,32 +49,40 @@ string PedirTipoContenido()
     return tipo;
 }
 
+
 string PedirClasificacion()
 {
     string tipo;
 
     do
     {
-        Console.WriteLine("Ingrese la clasificación (todo publico, +13, +18): ");
-        tipo = Console.ReadLine().ToLower();
+        Console.WriteLine(@"Ingrese la clasificación del contenido 
+Estas son las distintas opciones: 
+- Todo público
+- +13
+- +18 
+");
+        tipo = Console.ReadLine().ToLower()
+        .Replace("ú", "u")
+       .Trim();
 
         if (tipo != "todo publico" && tipo != "+13" && tipo != "+18")
         {
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("Error: clasificación no válida");
+            Console.WriteLine("Tipo de contenido no válido");
             Console.WriteLine("Intente de nuevo.........");
+            Console.WriteLine();
             Console.ResetColor();
         }
-
+        
     } while (tipo != "todo publico" && tipo != "+13" && tipo != "+18");
-
-    return tipo;
+      return tipo;
 }
 
 int MenuInicio ()
 {
     do { 
-    Console.ForegroundColor = ConsoleColor.Red;
+    Console.ForegroundColor = ConsoleColor.Yellow;
     Console.WriteLine(" 1. Evaluar nuevo contenido");
     Console.ResetColor();
 
@@ -72,7 +90,7 @@ int MenuInicio ()
     Console.WriteLine(" 2. Mostrar reglas del sistema");
     Console.ResetColor();
 
-    Console.ForegroundColor = ConsoleColor.Red;
+    Console.ForegroundColor = ConsoleColor.Yellow;
     Console.WriteLine(" 3. Mostrar estadísticas de la sesión");
     Console.ResetColor();
 
@@ -80,7 +98,7 @@ int MenuInicio ()
     Console.WriteLine(" 4. Reiniciar estadísticas");
     Console.ResetColor();
 
-    Console.ForegroundColor = ConsoleColor.Red;
+    Console.ForegroundColor = ConsoleColor.Yellow;
     Console.WriteLine(" 5. Salir");
     Console.ResetColor();
 
@@ -91,21 +109,20 @@ int MenuInicio ()
     Console.WriteLine();
     Console.ResetColor();
 
-    if (correcto)
-    {
-        if (opcion_menu < 1 || opcion_menu > 5)
+    
+        if (opcion_menu != 1 && opcion_menu != 2 && opcion_menu != 3 && opcion_menu != 4 && opcion_menu != 5)
         {
             Console.ForegroundColor = ConsoleColor.Red;
             correcto = false;
-            Console.WriteLine("Opción inválida");
-                Console.WriteLine();
+            Console.WriteLine("Opción inválida ");
+            Console.WriteLine("Inserte cualquier tecla para continuar....");
+            Console.WriteLine();
             Console.ResetColor();
         }
-    }
-} while (!correcto || opcion_menu <1 || opcion_menu >5);
+    
+} while (opcion_menu != 1 && opcion_menu != 2 && opcion_menu != 3 && opcion_menu != 4 && opcion_menu != 5);
     return opcion_menu;
 }
-
 
 
 do
@@ -129,14 +146,18 @@ do
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Error: debe ingresar un número");
+                    Console.WriteLine("Intente de nuevo.........");
+                    Console.WriteLine();
                     Console.ResetColor();
+                    
                 }
 
                 if ( duracion < 0 || duracion > 240)
                 {
                       Console.ForegroundColor = ConsoleColor.Red;
                       correcto = false;
-                      Console.WriteLine("Opción inválida");
+                      Console.WriteLine("Duración fuera de rango");
+                      Console.WriteLine("Intente de nuevo.........");
                       Console.WriteLine();
                       Console.ResetColor();
                 }
@@ -148,58 +169,102 @@ do
                 {
                 if (duracion < 60 || duracion > 180)
                 {
+                    Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Contenido rechazado");
+                    Console.WriteLine("La duración no es válida para una película");
+                    Console.WriteLine();
                     duracionValida = false;
+                    Console.ResetColor();
                 }
                 else
                 {
+                    Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine("Duración válida para película");
+                    Console.WriteLine();
                     duracionValida = true;
+                    Console.ResetColor();
                 }
                 }
                 else if (tipo_contenido == "serie")
                 {
                 if (duracion < 20 || duracion > 90)
                 {
+                    Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Contenido rechazado");
+                    Console.WriteLine("La duración no es válida para una serie");
                     duracionValida = false;
+                    Console.WriteLine();
+                    Console.ResetColor();
                 }
                 else
                 {
+                    Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine("Duración válida para serie");
+                    Console.WriteLine();
                     duracionValida = true;
+                    Console.ResetColor();
                 }
                 }
                 else if (tipo_contenido == "documental")
                 {
                     if (duracion < 30 || duracion > 120)
-                { Console.WriteLine("Contenido rechazado");
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Contenido rechazado");
+                    Console.WriteLine("La duración no es válida para un documental");
                     duracionValida = false;
+                    Console.WriteLine();
+                    Console.ResetColor();
                 }
                     else
-                    { Console.WriteLine("Duración válida para documental");
+                    {
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine("Duración válida para documental");
+                    Console.WriteLine();
                     duracionValida = true;
-                    }
+                    Console.ResetColor();
+                }
                 }
                 else if (tipo_contenido == "evento en vivo")
                 {
                     if (duracion < 30 || duracion > 240)
-                    { Console.WriteLine("Contenido rechazado");
+                    {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Contenido rechazado");
+                    Console.WriteLine("La duración no es válida para un evento en vivo");
                     duracionValida = false;
+                    Console.WriteLine();
+                    Console.ResetColor();
                 }
                     else
-                { 
+                {
+                    Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine("Duración válida para evento en vivo");
+                    Console.WriteLine();
                     duracionValida = true;
+                    Console.ResetColor();
                 }
                 }
                 else
-            { 
-                Console.WriteLine("Tipo de contenido no válido"); 
-                razon = razon + "Tipo de contenido no válido";
+            {
+
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Contenido rechazado");
+                duracionValida = false;
+                Console.WriteLine();
+                Console.ResetColor();
+            }
+            if (!duracionValida)
+            {
+                razon += "- Duración fuera de rango\n";
+            }
+            if (duracion == 60 || duracion == 180)
+            {
+                requiereAjuste = true;
+                razon = razon + "- Ajustar duración ligeramente\n";
             }
 
-                Console.WriteLine();
+            Console.WriteLine();
                 Console.WriteLine("Evaluar clasificacion");
                 clasificacion = PedirClasificacion(); // Validar clasificación y horario 2 if
 
@@ -262,7 +327,7 @@ do
             else
             {
                 Console.WriteLine("Horario no válido");
-                razon = razon + "Horario no válido";
+                razon = razon + "Horario no válido\n";
             }
 
                 Console.WriteLine();
@@ -289,10 +354,38 @@ do
                 else
                 { Console.WriteLine("Nivel de producción no válido"); 
             produccionValida=false;
-            razon = razon + "Nivel de producción no válido";
+            razon = razon + "Nivel de producción no válido\n";
             }
-            
-                break;
+
+            Console.WriteLine();
+            Console.WriteLine("=== DECISIÓN FINAL ===");
+
+            if (!duracionValida || !horarioValido || !produccionValida)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Rechazar");
+                Console.WriteLine("Razones:");
+                Console.WriteLine(razon);
+            }
+            else if (nivel_produccion == "alto")
+            {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("Enviar a revisión");
+            }
+            else if (requiereAjuste)
+            {
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                Console.WriteLine("Publicar con ajustes");
+                Console.WriteLine("Razones:");
+                Console.WriteLine(razon);
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("Publicar");
+            }
+
+            break;
 
         case 2:
             Console.WriteLine("Mostrar reglas del contenido");
