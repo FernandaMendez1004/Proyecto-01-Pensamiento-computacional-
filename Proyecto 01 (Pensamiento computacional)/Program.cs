@@ -12,31 +12,40 @@ int hora_programada = 0;
 string nivel_produccion = "";
 bool correcto;
 int opcion_menu = 0;
-
+int total = 0;
+int publicados = 0;
+int rechazados = 0;
+int revision = 0;
 string razon = "";
 bool duracionValida = false;
 bool horarioValido = false;
 bool produccionValida = false;
 bool requiereAjuste = false;
+bool cumpleTodo = false;
+int impactoAlto = 0;
+int impactoMedio = 0;
+int impactoBajo = 0;
+
 string PedirTipoContenido()
 {
     string tipo;
-    Console.ForegroundColor = ConsoleColor.Cyan;
-    Console.WriteLine("=== Tipo de Contenido ===");
+    
     do
     {
+        Console.ForegroundColor = ConsoleColor.Cyan;
+        Console.WriteLine("=== Tipo de Contenido ===");
         Console.WriteLine(@"Ingrese tipo de contenido 
-Estas son las distintas opciones 
-- Película
-- Serie
-- Documental
-- Evento en vivo
+  Estas son las distintas opciones:
+    - Película
+    - Serie
+    - Documental
+    - Evento en vivo
 ");
         tipo = Console.ReadLine().ToLower()
-       .Replace("í", "i")
-       .Trim(); 
+       .Replace("í", "i");
+       
 
-        if (tipo != "pelicula" && tipo != "serie" && tipo != "documental" && tipo != "evento en vivo ")
+        if (tipo != "pelicula" && tipo != "serie" && tipo != "documental" && tipo != "evento en vivo")
         {
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("Tipo de contenido no válido");
@@ -53,15 +62,16 @@ Estas son las distintas opciones
 string PedirNivelProduccion()
 {
     string nivel;
-    Console.ForegroundColor = ConsoleColor.Cyan;
-    Console.WriteLine("=== Nivel de Producción ===");
+    
     do
     {
+        Console.ForegroundColor = ConsoleColor.Cyan;
+        Console.WriteLine("=== Nivel de Producción ===");
         Console.WriteLine(@"Ingrese el nivel de producción
-Estas son las distintas opciones: 
-- Bajo
-- Medio
-- Alto
+  Estas son las distintas opciones: 
+    - Bajo
+    - Medio
+    - Alto
 ");
         nivel = Console.ReadLine().ToLower()
         .Trim();
@@ -83,15 +93,16 @@ Estas son las distintas opciones:
 string PedirClasificacion()
 {
     string tipo;
-    Console.ForegroundColor = ConsoleColor.Cyan;
-    Console.WriteLine("=== Clasificación de Contenido ===");
+    
     do
     {
+        Console.ForegroundColor = ConsoleColor.Cyan;
+        Console.WriteLine("=== Clasificación de Contenido ===");
         Console.WriteLine(@"Ingrese la clasificación del contenido 
-Estas son las distintas opciones: 
-- Todo público
-- +13
-- +18 
+  Estas son las distintas opciones: 
+    - Todo público
+    - +13
+    - +18 
 ");
         tipo = Console.ReadLine().ToLower()
         .Replace("ú", "u")
@@ -401,35 +412,98 @@ do
                 Console.WriteLine();
                 produccionValida = false;
             }
+           cumpleTodo = duracionValida && horarioValido && produccionValida;
+            if (!cumpleTodo)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("RECHAZAR  - No cumple las reglas técnicas");
+               Console.WriteLine("Duración: " + duracionValida);
+                Console.WriteLine("Horario: " + horarioValido);
+                Console.WriteLine("Producción: " + produccionValida);
+                Console.ResetColor();
+                return; 
+            }
 
+            string impacto = "Bajo";
+            if (nivel_produccion == "alto" || duracion > 120 || (hora_programada >= 20 && hora_programada <= 23))
+            {
+                impacto = "Alto";
+            }
+            else if (nivel_produccion == "medio" || (duracion >= 60 && duracion <= 120))
+            {
+                impacto = "Medio";
+            }
+            else if (nivel_produccion == "bajo" && duracion < 60)
+            {
+                impacto = "Bajo";
+            }
+
+            if (cumpleTodo)
+            {
+                if (impacto == "Alto")
+                    impactoAlto++;
+                else if (impacto == "Medio")
+                    impactoMedio++;
+                else if (impacto == "Bajo")
+                    impactoBajo++;
+            }
+
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("Clasificación de impacto: " + impacto);
+            Console.ResetColor();
+
+         
             Console.WriteLine();
             Console.WriteLine("=== DECISIÓN FINAL ===");
 
-            if (!duracionValida || !horarioValido || !produccionValida)
+            if (!cumpleTodo)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Rechazar");
-                Console.WriteLine("Razones:");
-                Console.WriteLine(razon);
-            }
-            else if (nivel_produccion == "alto")
-            {
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine("Enviar a revisión");
-            }
-            else if (requiereAjuste)
-            {
-                Console.ForegroundColor = ConsoleColor.DarkYellow;
-                Console.WriteLine("Publicar con ajustes");
-                Console.WriteLine("Razones:");
-                Console.WriteLine(razon);
+                Console.WriteLine("RECHAZAR ");
+
+                if (!duracionValida)
+                    Console.WriteLine("Duración inválida");
+
+                if (!horarioValido)
+                    Console.WriteLine("Horario no permitido");
+
+                if (!produccionValida)
+                    Console.WriteLine("Producción no válida");
+                Console.ResetColor();
+                total++;
+                rechazados++;
             }
             else
             {
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("Publicar");
-            }
+                requiereAjuste = false;
 
+                if (duracion == 60 || duracion == 120 || hora_programada == 6 || hora_programada == 22)
+                {
+                    requiereAjuste = true;
+                }
+
+                if (impacto == "Alto")
+                {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine("Enviar a revisión ");
+                    revision++;
+                }
+                else if (requiereAjuste)
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkYellow;
+                    Console.WriteLine("Publicar con ajustes");
+                    publicados++;
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine("Publicar");
+                    publicados++;
+                }
+
+                Console.ResetColor();
+                total++;
+            }
             break;
 
         case 2:
@@ -453,23 +527,39 @@ do
                 break;
 
         case 3:
-                Console.WriteLine("Mostrar estadísticas de la sesión ");
-                Console.WriteLine($"El tipo de contenido fue {tipo_contenido}");
-                Console.WriteLine($"La duracion del contenido fue {duracion}");
-                Console.WriteLine($"La clasificación del contenido fue {clasificacion}");
-                Console.WriteLine($"La hora programada del contenido fue {hora_programada}");
-                Console.WriteLine($"El nivel de producción del contenido fue {nivel_produccion}");
-                break;
+            Console.WriteLine("=== ESTADÍSTICAS DE LA SESIÓN ===");
+            Console.WriteLine("Total evaluados: " + total);
+            Console.WriteLine("Publicados: " + publicados);
+            Console.WriteLine("Rechazados: " + rechazados);
+            Console.WriteLine("En revisión: " + revision);
+            double porcentaje = total > 0 ? (publicados * 100.0 / total) : 0;
+            Console.WriteLine("Porcentaje de aprobación: " + porcentaje + "%");
+            string predominante = "Ninguno";
+            if (impactoAlto >= impactoMedio && impactoAlto >= impactoBajo)
+            {
+                predominante = "Alto";
+            }
+            else if (impactoMedio >= impactoAlto && impactoMedio >= impactoBajo)
+            {
+                predominante = "Medio";
+            }
+            else
+            {
+                predominante = "Bajo";
+            }
+            Console.WriteLine("Impacto predominante: " + predominante);
+            break;
 
         case 4:
             Console.WriteLine("Reiniciar estadísticas ");
-                opcion_menu = 0;
-                tipo_contenido = "";
-                duracion = 0;
-                clasificacion = "";
-                hora_programada = 0;
-                nivel_produccion = "";
-                break;
+            total = 0;
+            publicados = 0;
+            rechazados = 0;
+            revision = 0;
+            impactoAlto = 0;
+            impactoMedio = 0;
+            impactoBajo = 0;
+            break;
 
         case 5:
             Console.WriteLine("Salir");
