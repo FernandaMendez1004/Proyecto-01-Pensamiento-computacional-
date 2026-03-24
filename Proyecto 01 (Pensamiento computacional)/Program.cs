@@ -21,7 +21,8 @@ bool requiereAjuste = false;
 string PedirTipoContenido()
 {
     string tipo;
-
+    Console.ForegroundColor = ConsoleColor.Cyan;
+    Console.WriteLine("=== Tipo de Contenido ===");
     do
     {
         Console.WriteLine(@"Ingrese tipo de contenido 
@@ -45,15 +46,45 @@ Estas son las distintas opciones
         }
 
     } while (tipo != "pelicula" && tipo != "serie" && tipo != "documental" && tipo != "evento en vivo");
-
+    Console.ResetColor();
     return tipo;
 }
 
+string PedirNivelProduccion()
+{
+    string nivel;
+    Console.ForegroundColor = ConsoleColor.Cyan;
+    Console.WriteLine("=== Nivel de Producción ===");
+    do
+    {
+        Console.WriteLine(@"Ingrese el nivel de producción
+Estas son las distintas opciones: 
+- Bajo
+- Medio
+- Alto
+");
+        nivel = Console.ReadLine().ToLower()
+        .Trim();
+
+        if (nivel != "bajo" && nivel != "medio" && nivel != "alto")
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("Nivel de producción no válido");
+            Console.WriteLine("Intente de nuevo.........");
+            Console.WriteLine();
+            Console.ResetColor();
+        }
+
+    } while (nivel != "bajo" && nivel != "medio" && nivel != "alto");
+    Console.ResetColor();
+    return nivel;
+}
 
 string PedirClasificacion()
 {
     string tipo;
-
+    Console.ForegroundColor = ConsoleColor.Cyan;
+    Console.WriteLine("=== Clasificación de Contenido ===");
     do
     {
         Console.WriteLine(@"Ingrese la clasificación del contenido 
@@ -76,7 +107,8 @@ Estas son las distintas opciones:
         }
         
     } while (tipo != "todo publico" && tipo != "+13" && tipo != "+18");
-      return tipo;
+    Console.ResetColor();
+    return tipo;
 }
 
 int MenuInicio ()
@@ -254,23 +286,15 @@ do
                 Console.WriteLine();
                 Console.ResetColor();
             }
-            if (!duracionValida)
-            {
-                razon += "- Duración fuera de rango\n";
-            }
-            if (duracion == 60 || duracion == 180)
-            {
-                requiereAjuste = true;
-                razon = razon + "- Ajustar duración ligeramente\n";
-            }
-
-            Console.WriteLine();
+            
+                Console.WriteLine();
                 Console.WriteLine("Evaluar clasificacion");
                 clasificacion = PedirClasificacion(); // Validar clasificación y horario 2 if
 
             do
             {
                 Console.WriteLine("Ingrese la hora programada (0-23)");
+                Console.WriteLine("Escribe solo la hora en formato 24 horas");
                 correcto = int.TryParse(Console.ReadLine(), out hora_programada); // Validar duración según tipo de contenido 1 if
                 Console.WriteLine();
                 if (!correcto)
@@ -295,19 +319,28 @@ do
 
             if (clasificacion == "todo publico")
             {
+                Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("Clasificación válida para cualquier horario");
+                Console.WriteLine();
+                Console.ResetColor();
                 horarioValido = true;
             }
             else if (clasificacion == "+13")
             {
                 if (hora_programada >= 6 && hora_programada <= 22)
                 {
+                    Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine("Horario válido para clasificación +13");
+                    Console.WriteLine();
+                    Console.ResetColor();
                     horarioValido = true;
                 }
                 else
                 {
-                    Console.WriteLine("Rechazar: +13 solo se permite entre 6 y 22 horas");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Rechazar: En la clasificación +13 solo se permite el horario entre 6 y 22 horas");
+                    Console.WriteLine();
+                    Console.ResetColor();
                     horarioValido = false;
                 }
             }
@@ -315,46 +348,58 @@ do
             {
                 if (hora_programada >= 22 || hora_programada <= 5)
                 {
+                    Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine("Horario válido para clasificación +18");
+                    Console.WriteLine();
+                    Console.ResetColor();
                     horarioValido = true;
                 }
                 else
                 {
+                    Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Rechazar: +18 solo se permite entre 22 y 5 horas");
+                    Console.WriteLine();
+                    Console.ResetColor();
                     horarioValido = false;
                 }
             }
-            else
+
+            nivel_produccion = PedirNivelProduccion().ToLower().Trim();
+
+            if (nivel_produccion == "bajo")
             {
-                Console.WriteLine("Horario no válido");
-                razon = razon + "Horario no válido\n";
-            }
-
-                Console.WriteLine();
-                Console.WriteLine("Ingrese el nivel de producción (bajo, medio, alto)");
-                nivel_produccion = Console.ReadLine(); // Validar nivel de producción según clasificación 3 if
-
-                if (nivel_produccion == "bajo")
-                {
                 if (clasificacion == "todo publico" || clasificacion == "+13")
                 {
+                    Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine("Producción baja válida para clasificación");
+                    Console.WriteLine();
+                    Console.ResetColor();
                     produccionValida = true;
+
                 }
                 else
                 {
+                    Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Rechazar: producción baja solo válida para todo público o +13");
+                    Console.WriteLine();
+                    Console.ResetColor();
                     produccionValida = false;
                 }
-                }
-                else if (nivel_produccion == "medio" || nivel_produccion == "alto")
-                { Console.WriteLine("Producción media o alta válida para cualquier clasificación");
-            produccionValida = true;
-                }
-                else
-                { Console.WriteLine("Nivel de producción no válido"); 
-            produccionValida=false;
-            razon = razon + "Nivel de producción no válido\n";
+            }
+            else if (nivel_produccion == "medio" || nivel_produccion == "alto")
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("Producción válida");
+                Console.WriteLine();
+                Console.ResetColor();
+                produccionValida = true;
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Nivel de producción no válido");
+                Console.WriteLine();
+                produccionValida = false;
             }
 
             Console.WriteLine();
