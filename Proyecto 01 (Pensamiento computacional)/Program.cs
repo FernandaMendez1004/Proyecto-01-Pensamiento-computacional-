@@ -1,7 +1,7 @@
-﻿Console.ForegroundColor = ConsoleColor.Cyan;
-Console.WriteLine("= = = = = = = = = = = = = = = = = = = = = = = = = = = = = =");
-Console.WriteLine("            PROYECTO 01 - PLATAFORMA STREAMING");
-Console.WriteLine("= = = = = = = = = = = = = = = = = = = = = = = = = = = = = =");
+﻿Console.ForegroundColor = ConsoleColor.Magenta;
+Linea(32, "=");
+Console.WriteLine("               Proyecto 01 - Plataforma Streaming ");
+Linea(32, "=");
 Console.WriteLine();
 Console.ResetColor();
 
@@ -16,7 +16,6 @@ int total = 0;
 int publicados = 0;
 int rechazados = 0;
 int revision = 0;
-string razon = "";
 bool duracionValida = false;
 bool horarioValido = false;
 bool produccionValida = false;
@@ -26,6 +25,8 @@ int impactoAlto = 0;
 int impactoMedio = 0;
 int impactoBajo = 0;
 
+
+
 string PedirTipoContenido()
 {
     string tipo;
@@ -33,14 +34,18 @@ string PedirTipoContenido()
     do
     {
         Console.ForegroundColor = ConsoleColor.Cyan;
-        Console.WriteLine("=== Tipo de Contenido ===");
+        Console.WriteLine("= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =");
+        Console.WriteLine("                       Tipo de Contenido ");
+        Console.WriteLine("= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =");
+        Console.ResetColor();
+        Console.ForegroundColor = ConsoleColor.White;
         Console.WriteLine(@"Ingrese tipo de contenido 
   Estas son las distintas opciones:
     - Película
     - Serie
     - Documental
     - Evento en vivo
-");
+ Elija una opción:");
         tipo = Console.ReadLine().ToLower()
        .Replace("í", "i");
        
@@ -66,13 +71,17 @@ string PedirNivelProduccion()
     do
     {
         Console.ForegroundColor = ConsoleColor.Cyan;
-        Console.WriteLine("=== Nivel de Producción ===");
+        Console.WriteLine("= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =");
+        Console.WriteLine("                   Nivel de Producción ");
+        Console.WriteLine("= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =");
+        Console.ResetColor();
+        Console.ForegroundColor = ConsoleColor.White;
         Console.WriteLine(@"Ingrese el nivel de producción
   Estas son las distintas opciones: 
     - Bajo
     - Medio
     - Alto
-");
+Elija una opción:");
         nivel = Console.ReadLine().ToLower()
         .Trim();
 
@@ -97,13 +106,17 @@ string PedirClasificacion()
     do
     {
         Console.ForegroundColor = ConsoleColor.Cyan;
-        Console.WriteLine("=== Clasificación de Contenido ===");
+        Console.WriteLine("= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =");
+        Console.WriteLine("                 Clasificación de Contenido");
+        Console.WriteLine("= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =");
+        Console.ResetColor(); 
+        Console.ForegroundColor = ConsoleColor.White;
         Console.WriteLine(@"Ingrese la clasificación del contenido 
   Estas son las distintas opciones: 
     - Todo público
     - +13
     - +18 
-");
+Elija una opción:");
         tipo = Console.ReadLine().ToLower()
         .Replace("ú", "u")
        .Trim();
@@ -122,6 +135,14 @@ string PedirClasificacion()
     return tipo;
 }
 
+static void Linea(int cantidad, string simbolo)
+{
+    for (int i = 0; i < cantidad; i++)
+    {
+        Console.Write(simbolo + " ");
+    }
+    Console.WriteLine();
+}
 int MenuInicio ()
 {
     do { 
@@ -170,43 +191,51 @@ int MenuInicio ()
 
 do
 {
+    Console.ForegroundColor= ConsoleColor.Yellow;
+    Linea(32, "=");
+    Console.ResetColor(); 
+    Console.ForegroundColor = ConsoleColor.Magenta;
+    Console.WriteLine("                    MENÚ PRINCIPAL");
+    Console.ForegroundColor = ConsoleColor.Yellow;  Linea(32, "="); Console.ResetColor();
     opcion_menu = MenuInicio();
+    Console.ForegroundColor = ConsoleColor.Yellow;
+    Linea(32, "=");
+    Console.ResetColor();
 
     switch (opcion_menu)
         {
             case 1:
-                Console.WriteLine("Evaluar nuevo contenido");
-                tipo_contenido = PedirTipoContenido(); // Validar tipo de contenido
-                
+            tipo_contenido = PedirTipoContenido(); // Validar tipo de contenido
+            Console.ForegroundColor = ConsoleColor.Green;
+            Linea(32, "*");
+            Console.ResetColor();
             do
             {
-                Console.WriteLine("Ingrese la duración en minutos");
+                Console.WriteLine("Ingrese la duración en minutos (0 - 240)");
                 correcto = int.TryParse(Console.ReadLine(), out duracion); // Validar duración según tipo de contenido 1 if
-                Console.WriteLine();
                 Console.ResetColor();
 
                 if (!correcto)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Error: debe ingresar un número");
-                    Console.WriteLine("Intente de nuevo.........");
+                    correcto = false;
+                    Console.WriteLine("Ingrese un valor numerico");
+                    Console.WriteLine("Inserte cualquier tecla para continuar....");
                     Console.WriteLine();
                     Console.ResetColor();
-                    
                 }
 
-                if ( duracion < 0 || duracion > 240)
+                if (duracion < 0 || duracion > 240)
                 {
-                      Console.ForegroundColor = ConsoleColor.Red;
-                      correcto = false;
-                      Console.WriteLine("Duración fuera de rango");
-                      Console.WriteLine("Intente de nuevo.........");
-                      Console.WriteLine();
-                      Console.ResetColor();
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    correcto = false;
+                    Console.WriteLine("Opción inválida");
+                    Console.WriteLine("Inserte cualquier tecla para continuar....");
+                    Console.WriteLine();
+                    Console.ResetColor();
                 }
-              
             }
-            while (!correcto || duracion < 0 || duracion > 240  || (tipo_contenido == "pelicula" && (duracion < 60 || duracion > 180)) || (tipo_contenido == "serie" && (duracion < 20 || duracion > 90)) || (tipo_contenido == "documental" && (duracion < 30 || duracion > 120)) || (tipo_contenido == "evento en vivo" && (duracion < 30 || duracion > 240)));
+            while (!correcto || duracion < 0 || duracion > 240);
 
                 if (tipo_contenido == "pelicula")
                 {
@@ -297,11 +326,13 @@ do
                 Console.WriteLine();
                 Console.ResetColor();
             }
-            
-                Console.WriteLine();
-                Console.WriteLine("Evaluar clasificacion");
-                clasificacion = PedirClasificacion(); // Validar clasificación y horario 2 if
-
+            Console.ForegroundColor = ConsoleColor.Green;
+            Linea(32, "*");
+            Console.ResetColor();
+            clasificacion = PedirClasificacion(); // Validar clasificación y horario 2 if
+            Console.ForegroundColor = ConsoleColor.Green;
+            Linea(32, "*");
+            Console.ResetColor();
             do
             {
                 Console.WriteLine("Ingrese la hora programada (0-23)");
@@ -313,6 +344,7 @@ do
                     Console.ForegroundColor = ConsoleColor.Red;
                     correcto = false;
                     Console.WriteLine("Ingrese un valor numerico");
+                    Console.WriteLine("Inserte cualquier tecla para continuar....");
                     Console.WriteLine();
                     Console.ResetColor();
                 }
@@ -322,6 +354,7 @@ do
                     Console.ForegroundColor = ConsoleColor.Red;
                     correcto = false;
                     Console.WriteLine("Opción inválida");
+                    Console.WriteLine("Inserte cualquier tecla para continuar....");
                     Console.WriteLine();
                     Console.ResetColor();
                 }
@@ -332,7 +365,7 @@ do
             {
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("Clasificación válida para cualquier horario");
-                Console.WriteLine();
+           
                 Console.ResetColor();
                 horarioValido = true;
             }
@@ -342,7 +375,7 @@ do
                 {
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine("Horario válido para clasificación +13");
-                    Console.WriteLine();
+                  
                     Console.ResetColor();
                     horarioValido = true;
                 }
@@ -350,7 +383,7 @@ do
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Rechazar: En la clasificación +13 solo se permite el horario entre 6 y 22 horas");
-                    Console.WriteLine();
+                   
                     Console.ResetColor();
                     horarioValido = false;
                 }
@@ -361,20 +394,22 @@ do
                 {
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine("Horario válido para clasificación +18");
-                    Console.WriteLine();
-                    Console.ResetColor();
+                   Console.ResetColor();
                     horarioValido = true;
                 }
                 else
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Rechazar: +18 solo se permite entre 22 y 5 horas");
-                    Console.WriteLine();
+                   
                     Console.ResetColor();
                     horarioValido = false;
                 }
             }
-
+            Console.ForegroundColor = ConsoleColor.Green;
+            Linea(32, "*");
+            Console.ResetColor();
+            Console.WriteLine();
             nivel_produccion = PedirNivelProduccion().ToLower().Trim();
 
             if (nivel_produccion == "bajo")
@@ -420,9 +455,15 @@ do
                Console.WriteLine("Duración: " + duracionValida);
                 Console.WriteLine("Horario: " + horarioValido);
                 Console.WriteLine("Producción: " + produccionValida);
+                Console.WriteLine("Inserte cualquier tecla para continuar....");
                 Console.ResetColor();
                 return; 
             }
+
+            Console.ForegroundColor = ConsoleColor.Green;
+            Linea(32, "*");
+            Console.ResetColor();
+            Console.ForegroundColor = ConsoleColor.Magenta;
 
             string impacto = "Bajo";
             if (nivel_produccion == "alto" || duracion > 120 || (hora_programada >= 20 && hora_programada <= 23))
@@ -448,13 +489,22 @@ do
                     impactoBajo++;
             }
 
-            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.ForegroundColor = ConsoleColor.Magenta;
             Console.WriteLine("Clasificación de impacto: " + impacto);
             Console.ResetColor();
 
          
             Console.WriteLine();
-            Console.WriteLine("=== DECISIÓN FINAL ===");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Linea(32, "=");
+            Console.ResetColor();
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.WriteLine("                DECISIÓN FINAL "); 
+            Console.ResetColor();
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Linea(32, "=");
+            Console.WriteLine();
+            Console.ResetColor();
 
             if (!cumpleTodo)
             {
@@ -511,23 +561,34 @@ do
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine("a) Validación técnica");
                 Console.ResetColor();
+            Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine(" - Reglas de clasificación y horario\r\n    Todo público: cualquier hora \r\n    +13: entre 6 y 22 horas \r\n    +18: entre 22 y 5 horas ");
                 Console.WriteLine(" - Reglas de duración por tipo \r\n    Película: 60–180 minutos \r\n    Serie: 20–90 minutos \r\n    Documental: 30–120 minutos \r\n    Evento en vivo: 30–240 minutos ");
                 Console.WriteLine(" - Reglas de producción \r\n    Producción baja solo válida para Todo público o +13 \r\n    Producción media o alta válida para cualquier clasificación ");
                 Console.WriteLine();
-                Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.ResetColor();
+            Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine("b) Clasificación de impacto");
                 Console.ResetColor();
-                Console.WriteLine(" Impacto Alto: producción alta, o duración mayor a 120 minutos, o programado entre 20 y 23 horas. \r\n Impacto Medio: producción media o duración entre 60 y 120 minutos. \r\n Impacto Bajo: producción baja y duración menor a 60 minutos.");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine(" Impacto Alto: producción alta, o duración mayor a 120 minutos, o programado entre 20 y 23 horas. \r\n Impacto Medio: producción media o duración entre 60 y 120 minutos. \r\n Impacto Bajo: producción baja y duración menor a 60 minutos.");
                 Console.WriteLine();
-                Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.ResetColor();
+            Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine("c) Decisión final");
                 Console.ResetColor();
-                Console.WriteLine(" Publicar: cumple todas las reglas técnicas y su impacto es Bajo o Medio. \r\n Publicar con ajustes: cumple reglas técnicas, pero requiere modificación menor (ejemplo: ajustar horario permitido o duración dentro del rango). \r\n Enviar a revisión: cumple reglas técnicas, pero tiene impacto Alto. \r\n Rechazar: incumple alguna regla obligatoria. ");
-                break;
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine(" Publicar: cumple todas las reglas técnicas y su impacto es Bajo o Medio. \r\n Publicar con ajustes: cumple reglas técnicas, pero requiere modificación menor (ejemplo: ajustar horario permitido o duración dentro del rango). \r\n Enviar a revisión: cumple reglas técnicas, pero tiene impacto Alto. \r\n Rechazar: incumple alguna regla obligatoria. ");
+            Console.ResetColor();
+            break;
 
         case 3:
-            Console.WriteLine("=== ESTADÍSTICAS DE LA SESIÓN ===");
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Linea(32, "=");
+            Console.WriteLine("           ESTADÍSTICAS DE LA SESIÓN");
+            Linea(32, "=");
+            Console.ResetColor(); 
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("Total evaluados: " + total);
             Console.WriteLine("Publicados: " + publicados);
             Console.WriteLine("Rechazados: " + rechazados);
@@ -548,6 +609,7 @@ do
                 predominante = "Bajo";
             }
             Console.WriteLine("Impacto predominante: " + predominante);
+            Console.ResetColor();
             break;
 
         case 4:
